@@ -60,3 +60,6 @@ COPY patch .
 RUN patch -p1 < patch
 
 COPY additional_models/ demo_data/
+COPY run.sh .
+
+ENTRYPOINT [ "bash", "run.sh"  ]
