@@ -50,19 +50,13 @@ RUN . ~/miniconda3/bin/activate && \
 # Clone source repository of FoundationPose
 RUN git clone https://github.com/NVlabs/FoundationPose.git
 
-# RUN apt-get --purge remove 'nvidia-*' && \
-#     apt-get autoremove
-
-# RUN echo "deb http://security.ubuntu.com/ubuntu focal-security main" | tee /etc/apt/sources.list.d/focal-security.list
-# RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb && \
-#     dpkg -i cuda-keyring_1.1-1_all.deb && \
-#     apt-get update && \
-#     apt-get -y install cuda-12-4 && \
-#     rm -rf /var/lib/apt/lists/*
 
 COPY build_all_conda.sh .
-#RUN . ~/miniconda3/bin/activate && \
-#        conda update --force conda && \
-#        conda install -c conda-forge gcc
 RUN . ~/miniconda3/bin/activate && \
         bash build_all_conda.sh
+
+COPY config.yaml .
+COPY patch .
+RUN patch -p1 < patch
+
+COPY additional_models/ demo_data/
