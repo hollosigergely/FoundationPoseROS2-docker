@@ -34,6 +34,8 @@ RUN rm ~/miniconda3/miniconda.sh
 
 RUN echo ". ~/miniconda3/bin/activate" >> /root/.bashrc
 RUN . ~/miniconda3/bin/activate && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     conda install python=3.10
 
 RUN git clone https://github.com/ammar-n-abbas/FoundationPoseROS2.git
